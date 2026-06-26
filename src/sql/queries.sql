@@ -26,7 +26,7 @@
 --Utiliza LIMIT para mostrar solo una parte de la tabla.
 select * 
 from observations
-limit 5;
+limit 10;
 
 -- MISSION 2
 --¿Qué identificadores de región (region_id) aparecen en los datos?
@@ -99,6 +99,27 @@ limit 10;
 --Muestra el nombre de la región (regions.name) para cada observación.
 --Relaciona observations con regions usando region_id.
 
-select * from observations
+select observations.id, regions.name  
+from observations
 inner join regions
 on observations.region_id = regions.id;
+
+-- MISSION 11
+--Muestra el nombre científico de cada especie registrada (species.scientific_name).
+--Relaciona observations con species usando species_id.
+
+select observations.id, species.scientific_name 
+from observations
+inner join species
+on observations.species_id = species.id;
+
+-- MISSION 12
+--¿Cuál es la especie más observada por cada región?
+--Agrupa por región y especie, y ordena por cantidad.
+SELECT regions.name as region, species.scientific_name, COUNT(*) as total
+FROM observations
+JOIN species ON observations.species_id = species.id
+JOIN regions ON observations.region_id = regions.id
+GROUP BY region, species.scientific_name
+ORDER BY region, total DESC;
+
